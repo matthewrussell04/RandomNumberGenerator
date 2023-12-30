@@ -19,15 +19,17 @@ namespace RandomNumberGenerator
         }
 
         Random rng = new Random();
-        int minNumber;
-        int maxNumber;
+        int minNumber, maxNumber, randomNumber;
 
         private void generateButton_Click(object sender, EventArgs e)
         {
             try
             {
-                int randomNumber = rng.Next(minNumber, maxNumber+1);
+                //sets min and max as user inputs
+                randomNumber = rng.Next(minNumber, maxNumber+1);
                 label1.Text = randomNumber.ToString();
+
+                //if any non digit values entered, set values to 0
                 foreach (char c in min.Text)
                 {
                     if(!Char.IsDigit(c))
@@ -43,20 +45,20 @@ namespace RandomNumberGenerator
                         maxNumber = 0;
                     }
                 }
-
             } catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
-        }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
+            if(maxNumber < minNumber)
+            {
+                minNumber = 0; maxNumber = 0;
+            }
         }
 
         private void min_TextChanged(object sender, EventArgs e)
         {
+            //stores user input in minNumber
             try
             {
                 minNumber = int.Parse(min.Text);
@@ -68,6 +70,7 @@ namespace RandomNumberGenerator
 
         private void max_TextChanged(object sender, EventArgs e)
         {
+            //stores user input in maxNumber
             try
             {
                 maxNumber = int.Parse(max.Text);
